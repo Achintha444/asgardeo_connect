@@ -2,6 +2,12 @@
     "AuthorizationConfig": {
         "BaseOrganizationUrl": "https://api.asgardeo.io/t/flutterconnect",
         "ClientId": "Y61LTwxkIEmYqwb6P7amO5pcTSMa",
-        "ClientSecret": "pvlASqL8uHGq2voZguJAaf7A738a"
+        "ClientSecret": "pvlASqL8uHGq2voZguJAaf7A738a",
+        "Scopes": [
+            "openid",
+            "email",
+            "profile",
+            "internal_login"
+        ]
     }
 }

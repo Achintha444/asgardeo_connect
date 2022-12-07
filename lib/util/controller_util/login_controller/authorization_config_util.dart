@@ -1,33 +1,48 @@
-
 import 'package:asgardeo_connect/util/common.dart';
 import 'package:flutter/services.dart';
 
-/// read the config.json file and return the content
-/// [return] [Map<String, dynamic>]
-Future<Map<String, dynamic>> _readConfigJson() async {
-  final String config = await rootBundle.loadString('assets/config.json');
-  final Map<String, dynamic> configJson = jsonDecode(config);
+abstract class AuthorizationConfigUtil {
 
-  return configJson;
-}
+  static const String _REDIRECT_URL = "com.wso2.flutterconnect://login-callback ";
 
-/// get the base organization url
-Future<String> getBaseOrganizationUrl() async{
-  final Map<String, dynamic> configJson =  await _readConfigJson();
+  /// read the config.json file and return the content
+  /// [return] [Map<String, dynamic>]
+  static Future<Map<String, dynamic>> _readConfigJson() async {
+    final String config = await rootBundle.loadString('assets/config.json');
+    final Map<String, dynamic> configJson = Common.jsonDecode(config);
 
-  return configJson["AuthorizationConfig"]["BaseOrganizationUrl"];
-}
+    return configJson;
+  }
 
-/// get the client id
-Future<String> getClientId() async{
-  final Map<String, dynamic> configJson =  await _readConfigJson();
+  /// get the base organization url
+  static Future<String> _getBaseOrganizationUrl() async {
+    final Map<String, dynamic> configJson = await _readConfigJson();
 
-  return configJson["AuthorizationConfig"]["ClientId"];
-}
+    return configJson["AuthorizationConfig"]["BaseOrganizationUrl"];
+  }
 
-/// get the client secret
-Future<String> getClientSecret() async{
-  final Map<String, dynamic> configJson =  await _readConfigJson();
-  
-  return configJson["AuthorizationConfig"]["ClientSecret"];
+  /// get the client id
+  static Future<String> getClientId() async {
+    final Map<String, dynamic> configJson = await _readConfigJson();
+
+    return configJson["AuthorizationConfig"]["ClientId"];
+  }
+
+  /// get the client secret
+  static Future<String> getClientSecret() async {
+    final Map<String, dynamic> configJson = await _readConfigJson();
+
+    return configJson["AuthorizationConfig"]["ClientSecret"];
+  }
+
+  static String getRedirectUrl() {
+    return _REDIRECT_URL;
+  }
+
+  static Future<String> getDiscoveryUrl() async{
+
+    String baseUrl = await _getBaseOrganizationUrl();
+
+    return "$baseUrl/oauth2/token/.well-known/openid-configuration";
+  }
 }

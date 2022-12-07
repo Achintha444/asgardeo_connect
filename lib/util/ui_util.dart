@@ -1,9 +1,15 @@
 import "package:flutter/material.dart";
 
-double getMediaQueryHeight(context) {
-  return MediaQuery.of(context).size.height;
-}
+/// abstract class to have the util functions required for ui
+abstract class UiUtil {
 
-double getMediaQueryWidth(context) {
-  return MediaQuery.of(context).size.width;
+  /// get the screen height
+  static double getMediaQueryHeight(context) {
+    return MediaQuery.of(context).size.height;
+  }
+
+  /// get the screen width
+  static double getMediaQueryWidth(context) {
+    return MediaQuery.of(context).size.width;
+  }
 }

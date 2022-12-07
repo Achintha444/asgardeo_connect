@@ -3,15 +3,18 @@
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-final FlutterAppAuth _flutterAppAuthObject =   FlutterAppAuth();
-final FlutterSecureStorage _flutterSecureStorageObject = FlutterSecureStorage();
+abstract class LoginControllerUtil {
+  static final FlutterAppAuth _flutterAppAuthObject = FlutterAppAuth();
+  static final FlutterSecureStorage _flutterSecureStorageObject =
+      FlutterSecureStorage();
 
-FlutterAppAuth getFlutterAppAuthObject() {
+  /// get the [FlutterAppAuth] object
+  static FlutterAppAuth getFlutterAppAuthObject() {
+    return _flutterAppAuthObject;
+  }
 
-  return _flutterAppAuthObject;
-}
-
-FlutterSecureStorage getFlutterSecureStorageObject() {
-
-  return _flutterSecureStorageObject;
+  /// get the [FlutterSecureStorage] object
+  static FlutterSecureStorage getFlutterSecureStorageObject() {
+    return _flutterSecureStorageObject;
+  }
 }

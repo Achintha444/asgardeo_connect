@@ -24,8 +24,8 @@ class AccountPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SizedBox(
-          width: getMediaQueryWidth(context),
-          height: getMediaQueryHeight(context),
+          width: UiUtil.getMediaQueryWidth(context),
+          height: UiUtil.getMediaQueryHeight(context),
           child: Center(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
