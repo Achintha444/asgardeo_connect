@@ -9,43 +9,35 @@ class LoginController extends Controller {
   static final FlutterAppAuth _flutterAppAuth = LoginControllerUtil.getFlutterAppAuthObject();
   static final FlutterSecureStorage _flutterSecureStorage = LoginControllerUtil.getFlutterSecureStorageObject();
 
-  Future<void> loginAction() async {
+  static Future<void> loginAction() async {
 
     String clinetId = await AuthorizationConfigUtil.getClientId();
     String clinetSecret = await AuthorizationConfigUtil.getClientSecret();
-
+    List<String> scopes = await AuthorizationConfigUtil.getScopes();
+    
     try {
-      final AuthorizationTokenResponse result =
+
+      final AuthorizationTokenResponse? result =
           await _flutterAppAuth.authorizeAndExchangeCode(
         AuthorizationTokenRequest(
           clinetId,
-          clinetSecret,
           AuthorizationConfigUtil.getRedirectUrl(),
-          discoveryUrl: await AuthorizationConfigUtil.getDiscoveryUrl(),
-          scopes: ['openid', 'profile', 'offline_access'],
+          clientSecret: clinetSecret,
+          discoveryUrl: "https://api.asgardeo.io/t/flutterconnect/oauth2/token/.well-known/openid-configuration",
+          scopes: scopes,
         ),
       );
+      print("object");
+      print(result);
 
-      final idToken = parseIdToken(result.idToken);
-      final profile = await getUserDetails(result.accessToken);
+      // final idToken = parseIdToken(result.idToken);
+      // final profile = await getUserDetails(result.accessToken);
 
-      await secureStorage.write(
-          key: 'refresh_token', value: result.refreshToken);
+      // await _flutterSecureStorage.write(
+      //     key: 'refresh_token', value: result.refreshToken);
 
-      setState(() {
-        isBusy = false;
-        isLoggedIn = true;
-        name = idToken['name'];
-        picture = profile['picture'];
-      });
     } catch (e, s) {
       print('login error: $e - stack: $s');
-
-      setState(() {
-        isBusy = false;
-        isLoggedIn = false;
-        errorMessage = e.toString();
-      });
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:asgardeo_connect/controller/login_controller/login_controller.dart';
 import "package:asgardeo_connect/util/strings.dart";
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
@@ -45,8 +46,9 @@ class InitialPage extends StatelessWidget {
                     width: 200,
                     height: 50,
                     child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, '/account');
+                      onPressed: () async{
+                        await LoginController.loginAction();
+                        //Navigator.pushReplacementNamed(context, '/account');
                       },
                       child: const Text("Sign In"),
                     ),
