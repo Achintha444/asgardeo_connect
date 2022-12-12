@@ -15,7 +15,7 @@ abstract class AuthorizationConfigUtil {
   }
 
   /// get the base organization url
-  static Future<String> _getBaseOrganizationUrl() async {
+  static Future<String> getBaseOrganizationUrl() async {
     final Map<String, dynamic> configJson = await _readConfigJson();
 
     return configJson["AuthorizationConfig"]["BaseOrganizationUrl"];
@@ -46,7 +46,7 @@ abstract class AuthorizationConfigUtil {
   }
 
   static Future<String> getDiscoveryUrl() async {
-    String baseUrl = await _getBaseOrganizationUrl();
+    String baseUrl = await getBaseOrganizationUrl();
 
     return "$baseUrl/oauth2/token/.well-known/openid-configuration";
   }

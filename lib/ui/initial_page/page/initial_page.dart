@@ -1,4 +1,5 @@
 import 'package:asgardeo_connect/controller/login_controller/login_controller.dart';
+import 'package:asgardeo_connect/controller/user_details_controller/user_details_controller.dart';
 import "package:asgardeo_connect/util/strings.dart";
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
