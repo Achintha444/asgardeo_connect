@@ -1,4 +1,3 @@
-import "package:asgardeo_connect/util/strings.dart";
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
 import "package:flutter_svg/svg.dart";
@@ -31,16 +30,44 @@ class AccountPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Spacer(),
-                SvgPicture.asset(
-                  "assets/images/logo.svg",
-                  width: 200,
+                SizedBox(height: 20),
+                CircleAvatar(
+                  backgroundColor: Colors.orangeAccent.shade700,
+                  child: const Text('AH'),
+                  maxRadius: 30,
                 ),
-                const SizedBox(height: 10),
-                const Text(
-                  initialPageMessage,
+                SizedBox(height: 10),
+                Expanded(
+                  child: ListView.separated(
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const Divider(),
+                    itemCount: 4,
+                    itemBuilder: (context, index) => ListTile(
+                      leading: Container(
+                        height: double.infinity,
+                        child: Icon(Icons.phone),
+                      ),
+                      dense: true,
+                      title: Text(
+                        "Phone Number",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black38),
+                      ),
+                      subtitle: Text(
+                        "071-838-1361",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      style: ListTileStyle.list,
+                    ),
+                  ),
                 ),
-                const Spacer(),
+                SizedBox(height: 50),
                 SizedBox(
                   width: 200,
                   height: 50,

@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: themeData,
-      initialRoute: '/',
+      initialRoute: '/account',
       routes: {
         // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const InitialPage(),
