@@ -8,15 +8,17 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../user_details_controller/user_details_controller.dart';
 
-class LoginController extends Controller {
+class LoginController extends Controller{
   static final FlutterAppAuth _flutterAppAuth =
       LoginControllerUtil.getFlutterAppAuthObject();
   static final FlutterSecureStorage _flutterSecureStorage =
       LoginControllerUtil.getFlutterSecureStorageObject();
 
   static Future<void> loginAction() async {
-    String clinetId = await AuthorizationConfigUtil.getClientId();
-    List<String> scopes = await AuthorizationConfigUtil.getScopes();
+    final String clinetId = await AuthorizationConfigUtil.getClientId();
+    final List<String> scopes = await AuthorizationConfigUtil.getScopes();
+    final String baseOrganizationUrl =
+        await AuthorizationConfigUtil.getBaseOrganizationUrl();
 
     try {
       final AuthorizationTokenResponse? result =
@@ -25,20 +27,20 @@ class LoginController extends Controller {
           clinetId,
           AuthorizationConfigUtil.getRedirectUrl(),
           discoveryUrl:
-              "https://api.asgardeo.io/t/flutterconnect/oauth2/token/.well-known/openid-configuration",
+              "$baseOrganizationUrl/oauth2/token/.well-known/openid-configuration",
           scopes: scopes,
         ),
       );
       inspect(result);
 
-      if(result!=null){
-        final user =  UserDetailsController.getUserDetails(result.accessToken as String);
-         inspect(user);
+      if (result != null) {
+        final user =
+            UserDetailsController.getUserDetails(result.accessToken as String);
+        inspect(user);
       }
-     
-
     } catch (e, s) {
       inspect('login error: $e - stack: $s');
+      throw Exception('Failed to login');
     }
   }
 
