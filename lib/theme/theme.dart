@@ -6,7 +6,7 @@ ThemeData themeData = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-      foregroundColor: MaterialStateProperty.all<Color>(Colors.black87),
+      foregroundColor: MaterialStateProperty.all<Color>( Colors.white),
       textStyle: MaterialStateProperty.all<TextStyle>(
         const TextStyle(
           fontSize: 14,

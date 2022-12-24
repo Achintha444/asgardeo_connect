@@ -18,9 +18,7 @@ class MyApp extends StatelessWidget {
       theme: themeData,
       initialRoute: '/account',
       routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
         '/': (context) => const InitialPage(),
-        // When navigating to the "/second" route, build the SecondScreen widget.
         '/account': (context) => const AccountPage(),
       },
     );
