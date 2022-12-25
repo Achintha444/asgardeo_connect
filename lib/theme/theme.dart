@@ -6,24 +6,23 @@ ThemeData themeData = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ButtonStyle(
       backgroundColor: MaterialStateProperty.all<Color>(Colors.orange),
-      foregroundColor: MaterialStateProperty.all<Color>( Colors.white),
+      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
       textStyle: MaterialStateProperty.all<TextStyle>(
         const TextStyle(
           fontSize: 14,
           letterSpacing: 1,
-          fontWeight: FontWeight.w500
+          fontWeight: FontWeight.w500,
         ),
       ),
-  
     ),
   ),
   appBarTheme: const AppBarTheme(
-    color:Colors.white70,
+    color: Colors.white70,
     foregroundColor: Colors.black87,
     titleTextStyle: TextStyle(
       fontWeight: FontWeight.w700,
       color: Colors.black87,
-      fontSize: 18
-    )
+      fontSize: 18,
+    ),
   ),
 );

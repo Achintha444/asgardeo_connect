@@ -18,5 +18,4 @@ class UserDetailsController extends Controller {
       throw Exception('Failed to get user details');
     }
   }
-
 }
