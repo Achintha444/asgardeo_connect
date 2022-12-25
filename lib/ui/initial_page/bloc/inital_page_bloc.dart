@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,18 +14,15 @@ class InitalPageBloc extends Bloc<InitalPageEvent, InitalPageState> {
     on<Signin>((event, emit) async {
       emit(Loading());
 
-      try {
-        final AuthorizationTokenResponse? response =
-            await LoginController.loginAction();
-
-        if (response is AuthorizationResponse) {
-          emit(SigninSuccess());
-        } else {
-          emit(SigninFail());
-        }
-      } catch (e) {
-        emit(SigninFail());
-      }
+     await LoginController.loginAction()
+      .then((response) => emit(
+            SigninSuccess(
+              authorizationTokenResponse:
+                  response as AuthorizationTokenResponse,
+            ),
+          ))
+        .catchError((err) => emit(SigninFail()));
     });
+
   }
 }

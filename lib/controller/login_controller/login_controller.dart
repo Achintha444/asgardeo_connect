@@ -31,7 +31,9 @@ class LoginController extends Controller {
           scopes: scopes,
         ),
       );
+
       inspect(result);
+
       return result;
 
     } catch (e, s) {
@@ -39,6 +41,4 @@ class LoginController extends Controller {
       throw Exception('Failed to login');
     }
   }
-
-  // void logoutAction() async {...}
 }

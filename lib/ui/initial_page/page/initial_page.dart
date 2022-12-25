@@ -6,8 +6,6 @@ import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_svg/svg.dart";
 
-import '../../common/action_button.dart';
-
 class InitialPage extends StatelessWidget {
   const InitialPage({super.key});
 
@@ -15,6 +13,7 @@ class InitialPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: UiUtil.getMediaQueryWidth(context),
         decoration: BoxDecoration(
           gradient: RadialGradient(
             center: const Alignment(1, 1),
@@ -26,15 +25,6 @@ class InitialPage extends StatelessWidget {
             radius: 1,
           ),
         ),
-        child: _buildBody(context),
-      ),
-    );
-  }
-
-  BlocProvider<InitalPageBloc> _buildBody(BuildContext context) {
-    return BlocProvider(
-      create: (context) => InitalPageBloc(),
-      child: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -49,30 +39,47 @@ class InitialPage extends StatelessWidget {
               initialPageMessage,
             ),
             const Spacer(),
-            BlocListener<InitalPageBloc, InitalPageState>(
-              listener: (context, state) {
-                if (state is SigninFail) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    UiUtil.getSnackBar("Signin Failed"),
-                  );
-                }
-              },
-              child: BlocBuilder<InitalPageBloc, InitalPageState>(
-                builder: (context, state) {
-                  if (state is Initial) {
-                    return const SigninButton();
-                  } else if (state is Loading) {
-                    return CircularProgressIndicator();
-                  } else if (state is SigninFail) {
-                    return const SigninButton();
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                },
-              ),
-            ),
+           _buildBody(context),
             const Spacer(),
           ],
+        ),
+      ),
+    );
+  }
+
+  BlocProvider<InitalPageBloc> _buildBody(BuildContext context) {
+    return BlocProvider(
+      create: (context) => InitalPageBloc(),
+      child: BlocListener<InitalPageBloc, InitalPageState>(
+        listener: (context, state) {
+          if (state is SigninFail) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              UiUtil.getSnackBar("Signin Failed"),
+            );
+          } else if (state is SigninSuccess) {
+            Navigator.pushNamed(
+              context,
+              '/account',
+              arguments: <String, String>{
+                'city': 'Berlin',
+                'country': 'Germany',
+              },
+            );
+          }
+        },
+        child: BlocBuilder<InitalPageBloc, InitalPageState>(
+          builder: (context, state) {
+            print(state);
+            if (state is Initial) {
+              return const SigninButton();
+            } else if (state is Loading) {
+              return const CircularProgressIndicator();
+            } else if (state is SigninFail) {
+              return const SigninButton();
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
         ),
       ),
     );

@@ -1,18 +1,23 @@
+import 'package:asgardeo_connect/ui/account_page/bloc/account_page_bloc.dart';
 import 'package:asgardeo_connect/ui/account_page/widgets/profile_picture.dart';
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
+import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_svg/svg.dart";
 
 import '../../common/action_button.dart';
+import '../widgets/profile.dart';
 import '../widgets/profile_parameter.dart';
 
 class AccountPage extends StatelessWidget {
+  
   const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Column(
           children: [
             SvgPicture.asset(
@@ -30,30 +35,43 @@ class AccountPage extends StatelessWidget {
           width: UiUtil.getMediaQueryWidth(context),
           height: UiUtil.getMediaQueryHeight(context),
           child: Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(height: 20),
-                ProfilePicture(),
-                const SizedBox(height: 10),
-                Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (BuildContext context, int index) =>
-                        const Divider(),
-                    itemCount: 4,
-                    itemBuilder: (context, index) => ProfileParameter(),
-                  ),
-                ),
-                const SizedBox(height: 50),
-                ActionButton(
-                  buttonText: "Sign Out",
-                  onPressed: () => {print("object")}
-                ),
-                const Spacer(),
-              ],
-            ),
+            child: Profile(),
           ),
+        ),
+      ),
+    );
+  }
+
+  BlocProvider<AccountPageBloc> _buildBody(BuildContext context) {
+    return BlocProvider(
+      create: (context) => AccountPageBloc()..add(GetUserInfo(accessToken: "")),
+      child: BlocListener<AccountPageBloc, AccountPageState>(
+        listener: (context, state) {
+          if (state is UserInfoFail) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              UiUtil.getSnackBar("Fetch Userinfo Failed"),
+            );
+          } else if (state is SignoutFail) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              UiUtil.getSnackBar("Signout Failed"),
+            );
+          } else if (state is SignoutSuccess) {
+            Navigator.pushNamed(
+              context,
+              '/',
+            );
+          }
+        },
+        child: BlocBuilder<AccountPageBloc, AccountPageState>(
+          builder: (context, state) {
+            if (state is Initial || state is Loading) {
+              return const CircularProgressIndicator();
+            } else if (state is UserInfoSucess) {
+              return const Profile();
+            } else {
+              return const CircularProgressIndicator();
+            }
+          },
         ),
       ),
     );
