@@ -12,4 +12,9 @@ abstract class UiUtil {
   static double getMediaQueryWidth(context) {
     return MediaQuery.of(context).size.width;
   }
+
+  /// show a snackbar
+  static SnackBar getSnackBar(message) {
+    return SnackBar(content: Text(message));
+  }
 }

@@ -8,7 +8,7 @@ part 'inital_page_event.dart';
 part 'inital_page_state.dart';
 
 class InitalPageBloc extends Bloc<InitalPageEvent, InitalPageState> {
-  InitalPageBloc() : super(Loading()) {
+  InitalPageBloc() : super(Initial()) {
     on<Signin>((event, emit) async {
       emit(Loading());
 

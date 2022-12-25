@@ -1,11 +1,12 @@
-import 'package:asgardeo_connect/controller/login_controller/login_controller.dart';
-import 'package:asgardeo_connect/ui/common/action_button.dart';
 import 'package:asgardeo_connect/ui/initial_page/bloc/inital_page_bloc.dart';
+import 'package:asgardeo_connect/ui/initial_page/widgets/signin_button.dart';
 import "package:asgardeo_connect/util/strings.dart";
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_svg/svg.dart";
+
+import '../../common/action_button.dart';
 
 class InitialPage extends StatelessWidget {
   const InitialPage({super.key});
@@ -48,26 +49,29 @@ class InitialPage extends StatelessWidget {
               initialPageMessage,
             ),
             const Spacer(),
-            BlocBuilder<InitalPageBloc, InitalPageState>(
-              builder: (context, state) {
-                if (state is Initial) {
-                  return ActionButton(
-                    buttonText: "Sign In",
-                    onPressed: () async {
-                      await LoginController.loginAction();
-                      //Navigator.pushReplacementNamed(context, '/account');
-                    },
+            BlocListener<InitalPageBloc, InitalPageState>(
+              listener: (context, state) {
+                if (state is SigninFail) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    UiUtil.getSnackBar("Signin Failed"),
                   );
-                } else if (state is Loading) {
-                  return CircularProgressIndicator();
-                } else if (state is SigninFail) {
-                  return CircularProgressIndicator();
-                } else {
-                  return CircularProgressIndicator();
                 }
               },
+              child: BlocBuilder<InitalPageBloc, InitalPageState>(
+                builder: (context, state) {
+                  if (state is Initial) {
+                    return const SigninButton();
+                  } else if (state is Loading) {
+                    return CircularProgressIndicator();
+                  } else if (state is SigninFail) {
+                    return const SigninButton();
+                  } else {
+                    return CircularProgressIndicator();
+                  }
+                },
+              ),
             ),
-             const Spacer(),
+            const Spacer(),
           ],
         ),
       ),
