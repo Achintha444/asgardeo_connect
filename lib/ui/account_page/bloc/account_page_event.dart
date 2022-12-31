@@ -16,4 +16,11 @@ class GetUserInfo extends AccountPageEvent {
   List<Object> get props => [authorizationTokenResponse];
 }
 
-class Signout extends AccountPageEvent {}
+class Signout extends AccountPageEvent {
+  final AuthorizationTokenResponse authorizationTokenResponse;
+
+  const Signout({required this.authorizationTokenResponse});
+
+  @override
+  List<Object> get props => [authorizationTokenResponse];
+}

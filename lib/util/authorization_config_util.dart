@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_appauth/flutter_appauth.dart';
 
 abstract class AuthorizationConfigUtil {
-  static const String _redirectUrl =
-      "com.wso2.flutterconnect://login-callback";
+  static const String _redirectUrl = "com.wso2.flutterconnect://login-callback";
 
   /// read the config.json file and return the content
   /// [return] [Map<String, dynamic>]
@@ -55,14 +54,34 @@ abstract class AuthorizationConfigUtil {
     return "$baseUrl/oauth2/token/.well-known/openid-configuration";
   }
 
+  /// get the logout url
+  static Future<String> getLogoutUrl() async {
+    String baseUrl = await getBaseOrganizationUrl();
+
+    return "$baseUrl/oidc/logout";
+  }
+
   /// get the access token from the `AuthorizationTokenResponse`
-  static String getAccessToken(AuthorizationTokenResponse authorizationTokenResponse) {
+  static String getAccessToken(
+      AuthorizationTokenResponse authorizationTokenResponse) {
     String? accessToken = authorizationTokenResponse.accessToken;
 
-    if(accessToken==null){
+    if (accessToken == null) {
       return "";
     }
 
     return accessToken;
+  }
+
+  /// get the ID token from the `AuthorizationTokenResponse`
+  static String getIdToken(
+      AuthorizationTokenResponse authorizationTokenResponse) {
+    String? idToken = authorizationTokenResponse.idToken;
+
+    if (idToken == null) {
+      return "";
+    }
+
+    return idToken;
   }
 }

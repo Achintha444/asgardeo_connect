@@ -7,6 +7,8 @@ import 'package:flutter_appauth/flutter_appauth.dart';
 import 'package:http/http.dart';
 
 class UserDetailsController extends Controller {
+
+  /// get user details about the logged in user
   static Future<User> getUserDetails(AuthorizationTokenResponse authorizationTokenResponse) async {
     String userinfoUrl = await UserDetailsControllerUtil.getUserIntoUrl();
     String accessToken = AuthorizationConfigUtil.getAccessToken(authorizationTokenResponse);

@@ -2,14 +2,12 @@ import 'package:asgardeo_connect/ui/account_page/page/account_page.dart';
 import 'package:asgardeo_connect/ui/account_page/page/account_page_arguments.dart';
 import 'package:asgardeo_connect/ui/initial_page/bloc/inital_page_bloc.dart';
 import 'package:asgardeo_connect/ui/initial_page/widgets/signin_button.dart';
-import "package:asgardeo_connect/util/strings.dart";
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_svg/svg.dart";
 
 class InitialPage extends StatelessWidget {
-
   static const routeName = "/";
 
   const InitialPage({super.key});
@@ -40,11 +38,9 @@ class InitialPage extends StatelessWidget {
               width: 200,
             ),
             const SizedBox(height: 10),
-            const Text(
-              initialPageMessage,
-            ),
+            const Text("Asgardeo Connect Example"),
             const Spacer(),
-           _buildBody(context),
+            _buildBody(context),
             const Spacer(),
           ],
         ),
@@ -62,11 +58,9 @@ class InitialPage extends StatelessWidget {
               UiUtil.getSnackBar("Signin Failed"),
             );
           } else if (state is SigninSuccess) {
-            Navigator.pushNamed(
-              context,
-              AccountPage.routeName,
-              arguments: AccountPageArguments(state.authorizationTokenResponse)
-            );
+            Navigator.pushNamed(context, AccountPage.routeName,
+                arguments:
+                    AccountPageArguments(state.authorizationTokenResponse));
           }
         },
         child: BlocBuilder<InitalPageBloc, InitalPageState>(

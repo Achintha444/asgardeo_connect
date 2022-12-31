@@ -1,18 +1,19 @@
-import 'dart:convert';
-
+import 'package:asgardeo_connect/ui/account_page/widgets/signout_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 
 import '../../../model/user.dart';
-import '../../common/action_button.dart';
 import 'profile_parameter.dart';
 import 'profile_picture.dart';
 
 class Profile extends StatelessWidget {
   final User user;
+  final AuthorizationTokenResponse authorizationTokenResponse;
 
   const Profile({
     Key? key,
     required this.user,
+    required this.authorizationTokenResponse,
   }) : super(key: key);
 
   @override
@@ -36,8 +37,9 @@ class Profile extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 50),
-        ActionButton(
-            buttonText: "Sign Out", onPressed: () => {print("object")}),
+        SignoutButton(
+          authorizationTokenResponse: authorizationTokenResponse,
+        ),
         const Spacer(),
       ],
     );

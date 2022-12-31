@@ -66,6 +66,10 @@ class AccountPage extends StatelessWidget {
               UiUtil.getSnackBar("Signout Failed"),
             );
           } else if (state is SignoutSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              UiUtil.getSnackBar("Signout Success"),
+            );
+
             Navigator.pushNamed(
               context,
               InitialPage.routeName,
@@ -77,7 +81,10 @@ class AccountPage extends StatelessWidget {
             if (state is Initial || state is Loading) {
               return const CircularProgressIndicator();
             } else if (state is UserInfoSucess) {
-              return Profile(user: state.user);
+              return Profile(
+                user: state.user,
+                authorizationTokenResponse: args.authorizationTokenResponse,
+              );
             } else {
               return ProfileError(
                 authorizationTokenResponse: args.authorizationTokenResponse,

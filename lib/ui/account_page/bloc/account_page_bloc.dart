@@ -1,3 +1,4 @@
+import 'package:asgardeo_connect/controller/login_controller/login_controller.dart';
 import 'package:asgardeo_connect/controller/user_details_controller/user_details_controller.dart';
 import 'package:asgardeo_connect/model/user.dart';
 import 'package:bloc/bloc.dart';
@@ -15,6 +16,13 @@ class AccountPageBloc extends Bloc<AccountPageEvent, AccountPageState> {
       await UserDetailsController.getUserDetails(event.authorizationTokenResponse).then(
         (value) => emit(UserInfoSucess(user: value)),
       ).catchError((err) => emit(UserInfoFail()));
+    });
+    on<Signout>((event, emit) async {
+      emit(Loading());
+
+      await LoginController.logoutAction(event.authorizationTokenResponse).then(
+        (value) => emit(SignoutSuccess()),
+      ).catchError((err) => emit(SignoutFail()));
     });
   }
 }
