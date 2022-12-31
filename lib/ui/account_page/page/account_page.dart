@@ -1,20 +1,24 @@
 import 'package:asgardeo_connect/ui/account_page/bloc/account_page_bloc.dart';
-import 'package:asgardeo_connect/ui/account_page/widgets/profile_picture.dart';
+import 'package:asgardeo_connect/ui/account_page/page/account_page_arguments.dart';
+import 'package:asgardeo_connect/ui/account_page/widgets/profile_error.dart';
+import 'package:asgardeo_connect/ui/initial_page/page/initial_page.dart';
 import "package:asgardeo_connect/util/ui_util.dart";
 import "package:flutter/material.dart";
 import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_svg/svg.dart";
 
-import '../../common/action_button.dart';
 import '../widgets/profile.dart';
-import '../widgets/profile_parameter.dart';
 
 class AccountPage extends StatelessWidget {
-  
+  static const routeName = "/account";
+
   const AccountPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final AccountPageArguments args =
+        ModalRoute.of(context)!.settings.arguments as AccountPageArguments;
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -35,16 +39,22 @@ class AccountPage extends StatelessWidget {
           width: UiUtil.getMediaQueryWidth(context),
           height: UiUtil.getMediaQueryHeight(context),
           child: Center(
-            child: Profile(),
+            child: _buildBody(context, args),
           ),
         ),
       ),
     );
   }
 
-  BlocProvider<AccountPageBloc> _buildBody(BuildContext context) {
+  BlocProvider<AccountPageBloc> _buildBody(
+      BuildContext context, AccountPageArguments args) {
     return BlocProvider(
-      create: (context) => AccountPageBloc()..add(GetUserInfo(accessToken: "")),
+      create: (context) => AccountPageBloc()
+        ..add(
+          GetUserInfo(
+            authorizationTokenResponse: args.authorizationTokenResponse,
+          ),
+        ),
       child: BlocListener<AccountPageBloc, AccountPageState>(
         listener: (context, state) {
           if (state is UserInfoFail) {
@@ -58,7 +68,7 @@ class AccountPage extends StatelessWidget {
           } else if (state is SignoutSuccess) {
             Navigator.pushNamed(
               context,
-              '/',
+              InitialPage.routeName,
             );
           }
         },
@@ -67,9 +77,11 @@ class AccountPage extends StatelessWidget {
             if (state is Initial || state is Loading) {
               return const CircularProgressIndicator();
             } else if (state is UserInfoSucess) {
-              return const Profile();
+              return Profile(user: state.user);
             } else {
-              return const CircularProgressIndicator();
+              return ProfileError(
+                authorizationTokenResponse: args.authorizationTokenResponse,
+              );
             }
           },
         ),

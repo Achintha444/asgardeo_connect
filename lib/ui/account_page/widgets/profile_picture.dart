@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 
 class ProfilePicture extends StatelessWidget {
   
-  final String? letter;
+  final String fullName;
 
   const ProfilePicture({
     Key? key,
-    this.letter
+    required this.fullName
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
       backgroundColor: Colors.orangeAccent.shade700,
-      child: const Text('AH'),
       maxRadius: 30,
+      child: Text(fullName.characters.first),
     );
   }
 }

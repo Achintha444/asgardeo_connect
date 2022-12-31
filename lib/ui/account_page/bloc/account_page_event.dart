@@ -8,12 +8,12 @@ abstract class AccountPageEvent extends Equatable {
 }
 
 class GetUserInfo extends AccountPageEvent {
-  final String accessToken;
+  final AuthorizationTokenResponse authorizationTokenResponse;
 
-  const GetUserInfo({required this.accessToken});
+  const GetUserInfo({required this.authorizationTokenResponse});
 
   @override
-  List<Object> get props => [accessToken];
+  List<Object> get props => [authorizationTokenResponse];
 }
 
 class Signout extends AccountPageEvent {}

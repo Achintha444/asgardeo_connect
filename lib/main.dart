@@ -16,10 +16,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: themeData,
-      initialRoute: '/',
+      initialRoute: InitialPage.routeName,
       routes: {
-        '/': (context) => const InitialPage(),
-        '/account': (context) => const AccountPage(),
+        InitialPage.routeName: (context) => const InitialPage(),
+        AccountPage.routeName: (context) => const AccountPage(),
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:asgardeo_connect/util/common.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_appauth/flutter_appauth.dart';
 
 abstract class AuthorizationConfigUtil {
   static const String _redirectUrl =
@@ -35,19 +36,33 @@ abstract class AuthorizationConfigUtil {
     return configJson["AuthorizationConfig"]["ClientSecret"];
   }
 
+  /// get the client secret
   static Future<List<String>> getScopes() async {
     final Map<String, dynamic> configJson = await _readConfigJson();
 
     return List<String>.from(configJson["AuthorizationConfig"]["Scopes"]);
   }
 
+  /// get the redirect url
   static String getRedirectUrl() {
     return _redirectUrl;
   }
 
+  /// get the discovery url
   static Future<String> getDiscoveryUrl() async {
     String baseUrl = await getBaseOrganizationUrl();
 
     return "$baseUrl/oauth2/token/.well-known/openid-configuration";
+  }
+
+  /// get the access token from the `AuthorizationTokenResponse`
+  static String getAccessToken(AuthorizationTokenResponse authorizationTokenResponse) {
+    String? accessToken = authorizationTokenResponse.accessToken;
+
+    if(accessToken==null){
+      return "";
+    }
+
+    return accessToken;
   }
 }

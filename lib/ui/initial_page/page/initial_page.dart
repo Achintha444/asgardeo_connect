@@ -1,3 +1,5 @@
+import 'package:asgardeo_connect/ui/account_page/page/account_page.dart';
+import 'package:asgardeo_connect/ui/account_page/page/account_page_arguments.dart';
 import 'package:asgardeo_connect/ui/initial_page/bloc/inital_page_bloc.dart';
 import 'package:asgardeo_connect/ui/initial_page/widgets/signin_button.dart';
 import "package:asgardeo_connect/util/strings.dart";
@@ -7,6 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import "package:flutter_svg/svg.dart";
 
 class InitialPage extends StatelessWidget {
+
+  static const routeName = "/";
+
   const InitialPage({super.key});
 
   @override
@@ -59,17 +64,13 @@ class InitialPage extends StatelessWidget {
           } else if (state is SigninSuccess) {
             Navigator.pushNamed(
               context,
-              '/account',
-              arguments: <String, String>{
-                'city': 'Berlin',
-                'country': 'Germany',
-              },
+              AccountPage.routeName,
+              arguments: AccountPageArguments(state.authorizationTokenResponse)
             );
           }
         },
         child: BlocBuilder<InitalPageBloc, InitalPageState>(
           builder: (context, state) {
-            print(state);
             if (state is Initial) {
               return const SigninButton();
             } else if (state is Loading) {

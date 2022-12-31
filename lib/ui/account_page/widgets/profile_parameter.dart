@@ -1,29 +1,57 @@
 import 'package:flutter/material.dart';
 
 class ProfileParameter extends StatelessWidget {
-   final String? parameter;
-   final String? value;
-   final IconData? icon;
+  final Map<String, String> parameterObject;
 
-  const ProfileParameter({Key? key, this.parameter, this.value, this.icon})
-      : super(key: key);
+  const ProfileParameter({
+    Key? key,
+    required this.parameterObject
+  }) : super(key: key);
+
+  IconData _getIconDataForParameter(String parameter) {
+    switch (parameter) {
+      case "id":
+        return Icons.person;
+
+      case "email/username":
+        return Icons.email;
+
+      case "fullName":
+        return Icons.person_pin_rounded;
+
+      case "username":
+        return Icons.person_pin_circle;
+
+      default:
+        return Icons.error;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+
+    final String parameter = parameterObject.keys.first;
+    final String value = parameterObject[parameter] as String;
+
     return ListTile(
-      leading: Container(
+      leading: SizedBox(
         height: double.infinity,
-        child: Icon(Icons.phone),
+        child: Icon(
+          _getIconDataForParameter(parameter),
+        ),
       ),
       dense: true,
       title: Text(
-        "Phone Number",
-        style: TextStyle(
-            fontSize: 14, fontWeight: FontWeight.w500, color: Colors.black38),
+        parameter,
+        style: const TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.w500,
+          color: Colors.black38,
+        ),
       ),
       subtitle: Text(
-        "071-838-1361",
-        style: TextStyle(
+        value,
+        style: const TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w500,
           color: Colors.black87,
