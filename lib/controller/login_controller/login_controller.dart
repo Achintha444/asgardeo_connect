@@ -26,12 +26,15 @@ class LoginController extends Controller {
         ),
       );
 
+      inspect(result);
+
       return result;
     } catch (e, s) {
       inspect("login error: $e - stack: $s");
       throw Exception("Failed to login");
     }
   }
+
 
   /// logout function
   static Future<EndSessionResponse?> logoutAction(
