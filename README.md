@@ -1,16 +1,26 @@
-# asgardeo_connect
+# Authenticate your Flutter application using Asgardeoo
 
-A new Flutter project.
+This is an sample application that explains how to authenticate your Flutter application using Asgardeo.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+The main details on how to get started to use Asgardeo with Flutter is in the following Medium article.
+[link]
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### After that
+* Go to the `config/config.json` and edit these values according to your configuration
+```
+{
+    "AuthorizationConfig": {
+        "BaseOrganizationUrl": <BASE ORGANIZATION URL>,
+        "ClientId": <CLIENT ID OF THE APPLICAITON>,
+        "Scopes": [
+            "openid",
+            "email",
+            "profile",
+            "internal_login"
+        ]
+    }
+}
+```
