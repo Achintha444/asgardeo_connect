@@ -51,7 +51,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders = [
+        manifestPlaceholders += [
                 'appAuthRedirectScheme': 'com.wso2.flutterconnect'
         ]
     }
