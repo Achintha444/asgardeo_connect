@@ -5,7 +5,7 @@ This is an sample application that explains how to authenticate your Flutter app
 ## Getting Started
 
 The main details on how to get started to use Asgardeo with Flutter is in the following Medium article.
-[link]
+[https://achinthaisuru444.medium.com/authenticate-your-flutter-application-using-asgardeo-2cb9043258a1]
 
 
 ### After that
